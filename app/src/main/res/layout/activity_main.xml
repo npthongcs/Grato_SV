@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MainActivity">
+<!--    tools:context=".MainActivity">-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tbCreateGroup"
+        app:navigationIcon="@drawable/thong_back_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00587A"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Principle programming language"
+        app:titleTextColor="#fff" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/view_pager"
+        android:layout_above="@id/tab_layout"
+        android:layout_below="@id/tbCreateGroup"
+        />
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tab_layout"
+        app:tabIndicatorColor="#00587A"
+        app:tabIndicatorHeight="4dp"
+        android:background="@android:color/white"
+        app:tabMode="fixed"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

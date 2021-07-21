@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/quiz_item"
+        android:layout_width="wrap_content"
+        android:layout_height="115dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/tungrectangle5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/quiz_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_item"
+        app:layout_constraintTop_toTopOf="@id/quiz_item" />
+
+
+    <TextView
+        android:id="@+id/deadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="35dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_item"
+        app:layout_constraintTop_toTopOf="@id/quiz_item" />
+
+    <TextView
+        android:id="@+id/num_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="55dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_item"
+        app:layout_constraintTop_toTopOf="@id/quiz_item" />
+
+    <TextView
+        android:id="@+id/time_do_quiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="72dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_item"
+        app:layout_constraintTop_toTopOf="@id/quiz_item" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="88dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="14dp"
+        app:layout_constraintStart_toStartOf="@id/quiz_item"
+        app:layout_constraintTop_toTopOf="@id/quiz_item" />
+
+    <Button
+        android:id="@+id/buttonquiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="@id/quiz_item"
+        app:layout_constraintEnd_toEndOf="@id/quiz_item"
+        app:layout_constraintTop_toTopOf="@id/quiz_item" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

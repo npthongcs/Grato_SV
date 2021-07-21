@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.Show_Mark">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/thongtin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/tung_back_ground_xem_diem"
+        android:backgroundTint="#D3E0EA"
+        app:cardBackgroundColor="#D3E0EA"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tung_laguage"
+            android:id="@+id/subject"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Subject: Principle of Programmi..."
+            android:textColor="#1687A7"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@id/subject"
+            app:layout_constraintTop_toBottomOf = "@id/tbCreateGroup"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            />
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tung_present"
+            android:id="@+id/tung_present"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Class: L01"
+            android:textColor="#1687A7"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@id/tung_present"
+            app:layout_constraintTop_toBottomOf = "@id/tbCreateGroup"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            />
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="65dp"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/tung_test"
+            android:id="@+id/tung_test"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Avg grade: 9.00"
+            android:textColor="#1687A7"
+            android:textSize="20dp"
+            app:layout_constraintStart_toEndOf="@id/tung_present"
+            app:layout_constraintTop_toBottomOf = "@id/tbCreateGroup"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="65dp"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin = "0dp"
+        android:padding="5dp"
+        app:layout_constraintTop_toBottomOf="@id/thongtin"
+        tools:layout_editor_absoluteX="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/layout_listmark"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

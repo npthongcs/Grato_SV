@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.took_attendance">
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/tookattendtoolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="#00587A"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:navigationIcon="@drawable/thong_back_white"-->
+<!--        app:title="Principle programming language"-->
+<!--        app:titleTextColor="#fff" />-->
+
+    <View
+        android:id="@+id/book_i_1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/tungbook_i_1"
+        android:rotationX="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/rectangle_1"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="280dp"
+        android:background="@drawable/tungrectangle_2"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/took_attend"
+        android:layout_width="170dp"
+        android:layout_height="27dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="Took attendance"
+        android:textColor="#32BA7C"
+        android:textColorLink="#32BA7C"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangle_1"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@id/rectangle_1"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <TextView
+        android:id="@+id/some_id_3"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="3"
+        android:textColor="#32BA7C"
+        android:textColorLink="#32BA7C"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/took_attend"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/took_attend"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <TextView
+        android:id="@+id/absent"
+        android:layout_width="129dp"
+        android:layout_height="27dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="Absent"
+        android:textColor="#FF0000"
+        android:textColorLink="#FF0000"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangle_1"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@id/rectangle_1"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <TextView
+        android:id="@+id/some_id_4"
+        android:layout_width="12dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="1"
+        android:textColor="#FF0000"
+        android:textColorLink="#FF0000"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/absent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@id/absent"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="461dp"
+        android:background="@drawable/tungretangle"
+        android:text="Confirm"
+        android:id="@+id/btntook"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

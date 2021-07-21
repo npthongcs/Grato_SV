@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.ListGroupInClass">
+
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar_list_group"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="#1687A7"-->
+<!--        android:minHeight="?attr/actionBarSize"-->
+<!--        android:theme="?attr/actionBarTheme"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:navigationIcon="@drawable/thong_back_white"-->
+<!--        app:title="Groups"-->
+<!--        app:titleTextColor="#fff" />-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <Button
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/thong_ic_plus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--        <Button-->
+        <!--            android:layout_width="38dp"-->
+        <!--            android:layout_height="38dp"-->
+        <!--            android:layout_marginTop="6dp"-->
+        <!--            android:layout_marginEnd="16dp"-->
+        <!--            android:background="@drawable/thong_ic_plus"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="340dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/thong_rec_stroke_1line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/thong_ic_search"
+            app:layout_constraintStart_toStartOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="@+id/view3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end|bottom"-->
+<!--        android:src="@drawable/truong_icon_add"-->
+<!--        android:contentDescription=""-->
+<!--        android:layout_margin="16dp" />-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/thong_group_item" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingNewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/addgroup"
+        android:src="@drawable/truong_icon_add"
+        app:backgroundTint="#fff" />
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

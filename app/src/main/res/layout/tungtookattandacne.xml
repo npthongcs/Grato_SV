@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.tungtookattendance">
+    <!--    <View-->
+    <!--        android:id="@+id/rectangle"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="84dp"-->
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:background="@drawable/tungretangle"-->
+    <!--        app:layout_constraintTop_toTopOf="parent"-->
+    <!--        tools:layout_editor_absoluteX="0dp" />-->
+
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/arrow_back"-->
+    <!--        android:layout_width="20dp"-->
+    <!--        android:layout_height="20dp"-->
+    <!--        android:layout_alignParentLeft="true"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_alignParentRight="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_marginStart="28dp"-->
+    <!--        android:layout_marginLeft="28dp"-->
+    <!--        android:layout_marginTop="37dp"-->
+    <!--        android:background="@drawable/tungarrow"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView2"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="58dp"-->
+    <!--        android:layout_marginLeft="58dp"-->
+    <!--        android:layout_marginTop="37dp"-->
+    <!--        android:text="Principle of programing lan.."-->
+    <!--        android:textColor="#FFFFFF"-->
+    <!--        android:textColorLink="#1687A7"-->
+    <!--        android:textSize="22dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <View
+        android:id="@+id/book_i_1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="84dp"
+        android:background="@drawable/tungbook_i_1"
+        android:rotationX="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/rectangle_1"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="280dp"
+        android:background="@drawable/tungrectangle_2"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/took_attend"
+        android:layout_width="170dp"
+        android:layout_height="27dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="Took attendance"
+        android:textColor="#32BA7C"
+        android:textColorLink="#32BA7C"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangle_1"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="@id/rectangle_1"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <TextView
+        android:id="@+id/some_id_1"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="3"
+        android:textColor="#32BA7C"
+        android:textColorLink="#32BA7C"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/took_attend"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/took_attend"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <TextView
+        android:id="@+id/absent"
+        android:layout_width="129dp"
+        android:layout_height="27dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="Absent"
+        android:textColor="#FF0000"
+        android:textColorLink="#FF0000"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/rectangle_1"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="@id/rectangle_1"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <TextView
+        android:id="@+id/some_id_2"
+        android:layout_width="12dp"
+        android:layout_height="25dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:elevation="4dp"
+        android:gravity="center_horizontal|top"
+        android:text="1"
+        android:textColor="#FF0000"
+        android:textColorLink="#FF0000"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="@id/absent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="@id/absent"
+        app:layout_constraintTop_toTopOf="@id/rectangle_1" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:layout_marginTop="367dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

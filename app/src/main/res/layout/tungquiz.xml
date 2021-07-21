@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.quiz"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/option_scan_1"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/tungrectangle4"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="-5dp"
+            android:background="@drawable/tunguser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/personal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="12dp"
+            android:elevation="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center_vertical"
+            android:text="Personal"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/next_1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="344dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="-5dp"
+            android:background="@drawable/tungarrow1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.478" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/option_scan_2"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tungrectangle4"
+        android:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/option_scan_1">
+
+        <ImageView
+            android:id="@+id/user_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="-5dp"
+            android:background="@drawable/thong_icon_group"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/group_2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="12dp"
+            android:elevation="4dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center_vertical"
+            android:text="Group"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/next_2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="344dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="-5dp"
+            android:background="@drawable/tungarrow1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.478" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

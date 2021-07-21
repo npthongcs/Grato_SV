@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_custom_layout"
+    android:layout_width="350dp"
+    android:layout_height="475dp"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/txtAddtothisclass"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="16dp"
+        android:background="#fff"
+        android:gravity="center"
+        android:text="Add"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/ib_close"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/truong_icon_close"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtGroup"
+        android:layout_width="52dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="66dp"
+        android:gravity="center"
+        android:text="Group"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtDisplaytitle"
+        android:layout_width="229dp"
+        android:layout_height="37dp"
+        android:layout_gravity="left"
+        android:gravity="center"
+        android:text="Add this quiz to class: "
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/examCodeItemRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/truong_layout_item_add_class" />
+</RelativeLayout>
