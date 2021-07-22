@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.grato_sv.Adapter.MemberInGroupAdapter;
+import com.example.grato_sv.Fragment.ListGroupInClass;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.Model.Member;
 
@@ -38,9 +39,8 @@ public class ListMemberInGroup extends AppCompatActivity {
     Toolbar toolbar;
     String gname;
     String mode;
-    Integer maxMem=-1;
-    Integer noMem=-1;
     Button btnMode;
+    Integer noMem, maxMem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,12 @@ public class ListMemberInGroup extends AppCompatActivity {
         Log.d("mode intent",mode);
 
         // set mode button
-        if (mode.equals("JOIN")){
-            btnMode.setText("JOIN GROUP");
-        }
-        else {
-            btnMode.setText("OUT GROUP");
-        }
+//        if (mode.equals("JOIN")){
+//            btnMode.setText("JOIN GROUP");
+//        }
+//        else {
+//            btnMode.setText("OUT GROUP");
+//        }
 
         // get token
         SessionManagement sessionManagement = SessionManagement.getInstance(this);
@@ -69,108 +69,91 @@ public class ListMemberInGroup extends AppCompatActivity {
         Gson gson = new Gson();
         loginResponse = gson.fromJson(loginResponseJson, LoginResponse.class);
 
+        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
+
         addEvents();
         getData();
     }
 
     private void addEvents() {
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
-        btnMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnMode.getText().toString().equals("JOIN GROUP")){
-                    joinGroup();
-                }
-                else {
-                    outGroup();
-                }
-            }
-        });
+//        btnMode.setOnClickListener(v -> {
+//            if (btnMode.getText().toString().equals("JOIN GROUP")){
+//                joinGroup();
+//            }
+//            else {
+//                outGroup();
+//            }
+//        });
 
     }
 
-    private void outGroup() {
-        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
-        mGratoViewModel.getResponseOutGroup().observe(this, new Observer<Response<Void>>() {
-            @Override
-            public void onChanged(Response<Void> voidResponse) {
-                Log.d("out group: ",voidResponse.message());
-                if (voidResponse.isSuccessful()){
-                    Context context = getApplicationContext();
-                    CharSequence text = "Out group successful";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
-            }
-        });
-
-        mGratoViewModel.outGroup(loginResponse.getToken(),"CO3005",202,"L01",
-                gname,loginResponse.getUser().getId());
-    }
-
-    private void joinGroup() {
-        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
-        mGratoViewModel.getResponseGetNoMax().observe(this, new Observer<List<Integer>>() {
-            @Override
-            public void onChanged(List<Integer> integers) {
-                Log.d("integers",integers.toString());
-                noMem = integers.get(0);
-                maxMem = integers.get(1);
-                insertData(noMem,maxMem);
-            }
-        });
-        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(),"CO3005",202,"L01",gname);
-    }
-
-    private void insertData(Integer noMem,Integer maxMem) {
-//        Log.d("noMem",noMem.toString());
-//        Log.d("maxMem",maxMem.toString());
-
-        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
-        if (noMem<maxMem) {
-            mGratoViewModel.getResponseJoinGroup().observe(this, new Observer<Response<Void>>() {
-                @Override
-                public void onChanged(Response<Void> voidResponse) {
-                    Log.d("join group", voidResponse.message());
-                    if (voidResponse.isSuccessful()){
-                        Context context = getApplicationContext();
-                        CharSequence text = "Join group successful";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    } else {
-                        Context context = getApplicationContext();
-                        CharSequence text = "Join group unsuccessful";
-                        int duration = Toast.LENGTH_SHORT;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                    }
-                }
-            });
-
-            mGratoViewModel.joinGroup(loginResponse.getToken(), "CO3005", 202, "L01",
-                    gname, loginResponse.getUser().getId());
-        }
-        else {
-            Context context = getApplicationContext();
-            CharSequence text = "The group has enough members. Please join another group";
-            int duration = Toast.LENGTH_LONG;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.setGravity(Gravity.CENTER, 20, 30);
-            toast.show();
-        }
-    }
+//    private void outGroup() {
+//        mGratoViewModel.getResponseOutGroup().observe(this, voidResponse -> {
+//            Log.d("out group: ",voidResponse.message());
+//            if (voidResponse.isSuccessful()){
+//                Context context = getApplicationContext();
+//                CharSequence text = "Out group successful";
+//                int duration = Toast.LENGTH_SHORT;
+//
+//                Toast toast = Toast.makeText(context, text, duration);
+//                toast.show();
+//            }
+//        });
+//        mGratoViewModel.outGroup(loginResponse.getToken(),"CO3005",202,"L01",
+//                gname,loginResponse.getUser().getId());
+//    }
+//
+//    private void joinGroup() {
+//        mGratoViewModel.getResponseGetNoMax().observe(this, integers -> {
+//            Log.d("integers fr",integers.toString());
+//            noMem = integers.get(0);
+//            maxMem = integers.get(1);
+//            // insertData(noMem,maxMem);
+//        });
+//        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(),"CO3005",202,"L01",gname);
+//    }
+//
+//    private void insertData(Integer noMem,Integer maxMem) {
+//
+//        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
+//        if (noMem<maxMem) {
+//            mGratoViewModel.getResponseJoinGroup().observe(this, new Observer<Response<Void>>() {
+//                @Override
+//                public void onChanged(Response<Void> voidResponse) {
+//                    Log.d("join group", voidResponse.message());
+//                    if (voidResponse.isSuccessful()){
+//                        Context context = getApplicationContext();
+//                        CharSequence text = "Join group successful";
+//                        int duration = Toast.LENGTH_SHORT;
+//
+//                        Toast toast = Toast.makeText(context, text, duration);
+//                        toast.show();
+//                    } else {
+//                        Context context = getApplicationContext();
+//                        CharSequence text = "Join group unsuccessful";
+//                        int duration = Toast.LENGTH_SHORT;
+//
+//                        Toast toast = Toast.makeText(context, text, duration);
+//                        toast.show();
+//                    }
+//                }
+//            });
+//
+//            mGratoViewModel.joinGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+//                    gname, loginResponse.getUser().getId());
+//        }
+//        else {
+//            Context context = getApplicationContext();
+//            CharSequence text = "The group has enough members. Please join another group";
+//            int duration = Toast.LENGTH_LONG;
+//
+//            Toast toast = Toast.makeText(context, text, duration);
+//            toast.setGravity(Gravity.CENTER, 20, 30);
+//            toast.show();
+//        }
+//    }
 
     private void getData(){
 
@@ -178,21 +161,18 @@ public class ListMemberInGroup extends AppCompatActivity {
 
         mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
 
-        mGratoViewModel.getResponseMemberInGroup().observe(this, new Observer<List<Member>>() {
-            @Override
-            public void onChanged(List<Member> members) {
-                Log.d("member in group",members.toString());
-                MemberInGroupAdapter  memberInGroupAdapter = new MemberInGroupAdapter((ArrayList<Member>) members);
-                memberInGroup.setHasFixedSize(true);
-                memberInGroup.setAdapter(memberInGroupAdapter);
-            }
+        mGratoViewModel.getResponseMemberInGroup().observe(this, members -> {
+            Log.d("member in group",members.toString());
+            MemberInGroupAdapter  memberInGroupAdapter = new MemberInGroupAdapter((ArrayList<Member>) members);
+            memberInGroup.setHasFixedSize(true);
+            memberInGroup.setAdapter(memberInGroupAdapter);
         });
 
         mGratoViewModel.fetchMemberInGroup(loginResponse.getToken(),"CO3005",202,"L01",gname);
     }
 
     private void addControls(){
-        btnMode = findViewById(R.id.btn_mode_inout);
+        //btnMode = findViewById(R.id.btn_mode_inout);
         toolbar = findViewById(R.id.toolbar_list_member);
         memberInGroup = findViewById(R.id.list_member_in_group);
     }

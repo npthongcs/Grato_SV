@@ -23,7 +23,7 @@ public class MemberInGroupAdapter extends RecyclerView.Adapter<MemberInGroupAdap
 
     LoginResponse loginResponseSession;
 
-    public MemberInGroupAdapter(ArrayList<Member> lstMember){
+    public MemberInGroupAdapter(ArrayList<Member> lstMember) {
         this.lstMember = lstMember;
     }
 
@@ -57,14 +57,14 @@ public class MemberInGroupAdapter extends RecyclerView.Adapter<MemberInGroupAdap
         return lstMember == null ? 0 : lstMember.size();
     }
 
-    public class MemberViewHolder extends RecyclerView.ViewHolder{
+    public class MemberViewHolder extends RecyclerView.ViewHolder {
 
         public TextView vtID, vtName;
 
         public MemberViewHolder(@NonNull View itemView) {
             super(itemView);
-            vtID = (TextView) itemView.findViewById(R.id.id_student);
-            vtName = (TextView) itemView.findViewById(R.id.name_student);
+            vtID = itemView.findViewById(R.id.id_student);
+            vtName = itemView.findViewById(R.id.name_student);
         }
     }
 }

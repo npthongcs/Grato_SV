@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.grato_sv.Fragment.ListGroupInClass;
+import com.example.grato_sv.MainActivity;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.R;
 import com.example.grato_sv.SessionManagement;
@@ -35,12 +38,13 @@ public class CreateGroupActivity extends AppCompatActivity {
     GratoViewModel mGratoViewModel;
     Toolbar toolbar;
     Integer noMem, maxMem;
-    String gname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        ListGroupInClass listGroupInClass = new ListGroupInClass();
 
         // get token
         SessionManagement sessionManagement = SessionManagement.getInstance(this);
@@ -50,20 +54,28 @@ public class CreateGroupActivity extends AppCompatActivity {
         loginResponse = gson.fromJson(loginResponseJson, LoginResponse.class);
 
         addControls();
+        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
-        createGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getData();
-            }
+        createGroup.setOnClickListener(v -> {
+            check();
         });
+    }
+
+    private void check(){
+        mGratoViewModel.getResponseFindGroup().observe(this, s -> {
+            Log.d("name in create group",s);
+            if (!s.equals("-1")) {
+                Context context = getApplicationContext();
+                CharSequence text = "Create group unsuccessful. You joined another group.";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            } else getData();
+        });
+        mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
     }
 
     private void getData() {
@@ -72,36 +84,33 @@ public class CreateGroupActivity extends AppCompatActivity {
         Log.d("new name",newName);
         Log.d("new max member", maxMember.toString());
 
-        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
+        mGratoViewModel.getResponseCreateGroup().observe(this, voidResponse -> {
+            Log.d("create group",voidResponse.message());
 
-        mGratoViewModel.getResponseCreateGroup().observe(this, new Observer<Response<Void>>() {
-            @Override
-            public void onChanged(Response<Void> voidResponse) {
-                Log.d("create group",voidResponse.message());
+            if (voidResponse.isSuccessful()){
+                Context context = getApplicationContext();
+                CharSequence text = "Create group successful";
+                int duration = Toast.LENGTH_SHORT;
 
-                if (voidResponse.isSuccessful()){
-                    Context context = getApplicationContext();
-                    CharSequence text = "Create group successful";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                    //joinGroup();
-                }
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                joinGroup();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
-        mGratoViewModel.createGroup(loginResponse.getToken(),"CO3005",202,"L01",newName,maxMember);
+        mGratoViewModel.createGroup(loginResponse.getToken(),"CO3005",202,"L01",
+                newName,maxMember);
 
     }
 
     // ==============
     private void joinGroup() {
-       // mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
         mGratoViewModel.getResponseGetNoMax().observe(this, new Observer<List<Integer>>() {
             @Override
             public void onChanged(List<Integer> integers) {
-                Log.d("integers",integers.toString());
+                Log.d("integers activity",integers.toString());
                 noMem = integers.get(0);
                 maxMem = integers.get(1);
                 insertData(noMem,maxMem);
@@ -111,10 +120,6 @@ public class CreateGroupActivity extends AppCompatActivity {
     }
 
     private void insertData(Integer noMem,Integer maxMem) {
-//        Log.d("noMem",noMem.toString());
-//        Log.d("maxMem",maxMem.toString());
-        Log.d("##############","########");
-      //  mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
         if (noMem<maxMem) {
             mGratoViewModel.getResponseJoinGroup().observe(this, new Observer<Response<Void>>() {
                 @Override

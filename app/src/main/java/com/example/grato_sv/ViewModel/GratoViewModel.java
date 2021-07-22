@@ -300,8 +300,9 @@ public class GratoViewModel extends ViewModel {
     }
 
     // find group
-    public void findGroup(String token, String user_id) {
-        mGroupRepository.findGroup(token, user_id)
+    public void findGroup(String token, String user_id, String sub_id, Integer semester_id,
+                          String class_id) {
+        mGroupRepository.findGroup(token, user_id, sub_id,semester_id,class_id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new MaybeObserver<String>() {

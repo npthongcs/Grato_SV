@@ -43,8 +43,9 @@ public class GroupRepository {
         return mApiRequest.createGroup(token,sub_id,semester_id,class_id,group_name,max_student);
     }
 
-    public Maybe<String> findGroup(String token, String user_id){
-        return mApiRequest.findGroup(token,user_id);
+    public Maybe<String> findGroup(String token, String user_id,String sub_id, Integer semester_id,
+                                   String class_id){
+        return mApiRequest.findGroup(token,user_id,sub_id,semester_id,class_id);
     }
 
     public Maybe<Response<Void>> joinGroup(String token, String sub_id, Integer semester_id,

@@ -132,7 +132,10 @@ public interface ApiRequest {
     @GET("student/group/findgroup")
     Maybe<String> findGroup(
             @Header("authorization") String authorization,
-            @Query("user_id") String user_id
+            @Query("user_id") String user_id,
+            @Query("sub_id") String sub_id,
+            @Query("semester_id") Integer semester_id,
+            @Query("class_id") String class_id
     );
     @FormUrlEncoded
     @POST("student/group/joingroup")

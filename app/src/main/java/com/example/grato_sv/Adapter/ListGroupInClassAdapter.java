@@ -35,6 +35,8 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
     String gname="";
     Context context;
 
+    GroupItemListener mGroupItemListener;
+
     LoginResponse loginResponseSession;
 
     public ListGroupInClassAdapter(ArrayList<Group> lstGroup, String gname){
@@ -64,8 +66,6 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
         Group mgroup = lstGroup.get(position);
 
-        //Log.d("AAAAAA gname",gname);
-
         if (mgroup.getGname().equals(gname)){
             holder.btnMode.setText("OUT");
         }
@@ -94,12 +94,10 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
             @Override
             public void onClick(View v) {
                 String mode;
-                Intent intent = new Intent(context, ListMemberInGroup.class);
                 mode = holder.btnMode.getText().toString();
                 Log.d("Mode",mode);
-                intent.putExtra("nameGroup",mgroup.getGname());
-                intent.putExtra("modeButton",mode);
-                context.startActivity(intent);
+                if (mode.equals("OUT")) mGroupItemListener.clickOutGroup(mgroup.getGname(), position);
+                else if (mode.equals("JOIN")) mGroupItemListener.clickJoinGroup(mgroup.getGname(), position);
             }
         });
 
@@ -110,19 +108,28 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
         return lstGroup == null ? 0 : lstGroup.size();
     }
 
-    public class GroupViewHolder extends RecyclerView.ViewHolder{
+    public static class GroupViewHolder extends RecyclerView.ViewHolder{
 
         public TextView vtNameGroup, vtMaxStudent, vtWholesale;
         Button btnMember,btnMode;
 
         public GroupViewHolder(@NonNull View itemView) {
             super(itemView);
-            vtNameGroup = (TextView) itemView.findViewById(R.id.name_group);
-            vtMaxStudent = (TextView) itemView.findViewById(R.id.maxStudent);
-            vtWholesale = (TextView) itemView.findViewById(R.id.wholesale);
+            vtNameGroup = itemView.findViewById(R.id.name_group);
+            vtMaxStudent = itemView.findViewById(R.id.maxStudent);
+            vtWholesale = itemView.findViewById(R.id.wholesale);
             btnMember = itemView.findViewById(R.id.button_view_member);
             btnMode = itemView.findViewById(R.id.button_mode);
         }
+    }
+
+    public interface GroupItemListener{
+        void clickOutGroup(String group_name, Integer position);
+        void clickJoinGroup(String group_name, Integer position);
+    }
+
+    public void setGroupItemListener (GroupItemListener groupItemListener){
+        mGroupItemListener = groupItemListener;
     }
 }
 

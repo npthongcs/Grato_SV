@@ -1,5 +1,6 @@
 package com.example.grato_sv.Fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,11 +9,14 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.grato_sv.Activity.CreateGroupActivity;
 import com.example.grato_sv.Adapter.ListGroupInClassAdapter;
@@ -26,17 +30,27 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Response;
 
 
-public class ListGroupInClass extends Fragment {
+public class ListGroupInClass extends Fragment implements ListGroupInClassAdapter.GroupItemListener {
+
+    Integer test = 10;
 
     RecyclerView listGroupRecycleView;
     View view;
+    Integer noMem, maxMem;
+    Boolean isJoin = false, isOut = false;
+    Integer positionJoin;
 
-    GratoViewModel mGratoViewModel;
-    LoginResponse loginResponse;
-    String gname;
+    static GratoViewModel mGratoViewModel;
+    static LoginResponse loginResponse;
+    String group_name, gname;
+    Integer position;
     FloatingActionButton fab;
+    ListGroupInClassAdapter.GroupItemListener groupItemListener = this;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,50 +65,119 @@ public class ListGroupInClass extends Fragment {
         loginResponse = gson.fromJson(loginResponseJson, LoginResponse.class);
 
         addControls();
+        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CreateGroupActivity.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), CreateGroupActivity.class);
+            requireActivity().startActivity(intent);
         });
 
         // Inflate the layout for this fragment
+        makeObserver();
         getData();
         return view;
     }
 
+    public void makeObserver(){
+        mGratoViewModel.getResponseGetNoMax().observe(getViewLifecycleOwner(), integers -> {
+            Log.d("integers", integers.toString());
+            noMem = integers.get(0);
+            maxMem = integers.get(1);
+            insertData(noMem, maxMem, group_name, position);
+        });
+    }
+
     private void getData() {
-        ArrayList<Group> lstGroup = new ArrayList<>();
+        mGratoViewModel.getResponseFindGroup().observe(getViewLifecycleOwner(), s -> {
+            gname = s;
+            Log.d("name finded", gname);
+            mGratoViewModel.fetchListGroup(loginResponse.getToken(), "CO3005", 202, "L01");
+        });
 
-        mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
-
-        mGratoViewModel.getResponseFindGroup().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                gname = s;
-                Log.d("name finded",gname);
+        mGratoViewModel.getResponseListGroup().observe(getViewLifecycleOwner(), groups -> {
+            Log.d("list group", groups.toString());
+            ListGroupInClassAdapter listGroupClassAdapter = new ListGroupInClassAdapter((ArrayList<Group>) groups, gname);
+            listGroupClassAdapter.setGroupItemListener(groupItemListener);
+            listGroupRecycleView.setHasFixedSize(true);
+            listGroupRecycleView.setAdapter(listGroupClassAdapter);
+            if (isJoin) {
+                listGroupClassAdapter.notifyItemChanged(positionJoin);
+                isJoin = false;
+            }
+            if (isOut) {
+                listGroupClassAdapter.notifyItemChanged(positionJoin);
+                isOut = false;
             }
         });
 
-        mGratoViewModel.getResponseListGroup().observe(getViewLifecycleOwner(), new Observer<List<Group>>() {
-            @Override
-            public void onChanged(List<Group> groups) {
-                Log.d("list group",groups.toString());
-                ListGroupInClassAdapter listGroupClassAdapter = new ListGroupInClassAdapter((ArrayList<Group>) groups, gname);
-                listGroupRecycleView.setHasFixedSize(true);
-                listGroupRecycleView.setAdapter(listGroupClassAdapter);
-            }
-        });
-
-        mGratoViewModel.findGroup(loginResponse.getToken(),loginResponse.getUser().getId());
-        mGratoViewModel.fetchListGroup(loginResponse.getToken(),"CO3005",202,"L01");
+        mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
 
     }
 
     private void addControls() {
         fab = view.findViewById(R.id.floatingNewGroup);
         listGroupRecycleView = view.findViewById(R.id.list_group);
+    }
+
+    @Override
+    public void clickOutGroup(String group_name, Integer position) {
+        mGratoViewModel.getResponseOutGroup().observe(this, new Observer<Response<Void>>() {
+            @Override
+            public void onChanged(Response<Void> voidResponse) {
+                Log.d("out group: ", voidResponse.message());
+                if (voidResponse.isSuccessful()) {
+                    CharSequence text = "Out group successful";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(getContext(), text, duration);
+                    toast.show();
+
+                    isOut = true;
+                    positionJoin = position;
+                    mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+                }
+            }
+        });
+        mGratoViewModel.outGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+                group_name, loginResponse.getUser().getId());
+    }
+
+    @Override
+    public void clickJoinGroup(String group_name, Integer position) {
+        this.group_name = group_name;
+        this.position = position;
+        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(), "CO3005", 202, "L01", group_name);
+    }
+
+    public void insertData(Integer noMem, Integer maxMem, String group_name, Integer position) {
+        if (noMem < maxMem) {
+            mGratoViewModel.getResponseJoinGroup().observe(getViewLifecycleOwner(), voidResponse -> {
+                Log.d("join group", voidResponse.message());
+                if (voidResponse.isSuccessful()) {
+                    CharSequence text = "Join group successful";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getContext(), text, duration);
+                    toast.show();
+                    isJoin = true;
+                    positionJoin = position;
+                    mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+                } else {
+                    CharSequence text = "Join group unsuccessful";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getContext(), text, duration);
+                    toast.show();
+                }
+            });
+
+            mGratoViewModel.joinGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+                    group_name, loginResponse.getUser().getId());
+        } else {
+            CharSequence text = "The group has enough members. Please join another group";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(getContext(), text, duration);
+            toast.setGravity(Gravity.CENTER, 20, 30);
+            toast.show();
+        }
     }
 }

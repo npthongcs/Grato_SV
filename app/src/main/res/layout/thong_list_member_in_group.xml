@@ -31,21 +31,21 @@
         tools:listitem="@layout/thong_member_item" />
 
 
-    <Button
-        android:id="@+id/btn_mode_inout"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/thong_rectangle"
-        android:fontFamily="@font/roboto_bold"
-        android:text="Nothing"
-        android:textColor="#fff"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/list_member_in_group"
-        app:layout_constraintStart_toStartOf="@+id/list_member_in_group"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_list_member"
-        app:layout_constraintVertical_bias="0.97" />
+<!--    <Button-->
+<!--        android:id="@+id/btn_mode_inout"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:background="@drawable/thong_rectangle"-->
+<!--        android:fontFamily="@font/roboto_bold"-->
+<!--        android:text="Nothing"-->
+<!--        android:textColor="#fff"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/list_member_in_group"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/list_member_in_group"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar_list_member"-->
+<!--        app:layout_constraintVertical_bias="0.97" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
