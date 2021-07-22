@@ -149,6 +149,11 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
         mGratoViewModel.fetchgetNoMax(loginResponse.getToken(), "CO3005", 202, "L01", group_name);
     }
 
+    @Override
+    public void clickDeleteGroup(String group_name, Integer noNow) {
+
+    }
+
     public void insertData(Integer noMem, Integer maxMem, String group_name, Integer position) {
         if (noMem < maxMem) {
             mGratoViewModel.getResponseJoinGroup().observe(getViewLifecycleOwner(), voidResponse -> {

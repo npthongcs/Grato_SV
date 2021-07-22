@@ -101,6 +101,14 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
             }
         });
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                mGroupItemListener.clickDeleteGroup(mgroup.getGname(),mgroup.getNoStudent());
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -126,6 +134,7 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
     public interface GroupItemListener{
         void clickOutGroup(String group_name, Integer position);
         void clickJoinGroup(String group_name, Integer position);
+        void clickDeleteGroup(String group_name, Integer noNow);
     }
 
     public void setGroupItemListener (GroupItemListener groupItemListener){
