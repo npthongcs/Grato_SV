@@ -156,6 +156,14 @@ public interface ApiRequest {
             @Query("group_name") String group_name,
             @Query("user_id") String user_id
     );
+    @DELETE("student/group/deletegroup")
+    Maybe<Response<Void>> deleteGroup(
+            @Header("authorization") String authorization,
+            @Query("sub_id") String sub_id,
+            @Query("semester_id") Integer semester_id,
+            @Query("class_id") String class_id,
+            @Query("group_name") String group_name
+    );
     @GET("student/group/getnomax")
     Maybe<List<Integer>> getNoMax(
             @Header("authorization") String authorization,

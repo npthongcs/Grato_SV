@@ -58,6 +58,11 @@ public class GroupRepository {
         return mApiRequest.outgroup(token,sub_id,semester_id,class_id,group_name,user_id);
     }
 
+    public Maybe<Response<Void>> deleteGroup(String token, String sub_id, Integer semester_id,
+                                          String class_id, String group_name){
+        return mApiRequest.deleteGroup(token,sub_id,semester_id,class_id,group_name);
+    }
+
     public Maybe<List<Integer>> getNoMax(String token, String sub_id, Integer semester_id, String class_id, String group_name){
         return mApiRequest.getNoMax(token,sub_id,semester_id,class_id,group_name);
     }

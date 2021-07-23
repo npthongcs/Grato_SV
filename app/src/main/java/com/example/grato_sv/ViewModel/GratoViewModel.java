@@ -82,7 +82,7 @@ public class GratoViewModel extends ViewModel {
     private MutableLiveData<Response<Void>> mJoinGroup;
     private MutableLiveData<Response<Void>> mOutGroup;
     private MutableLiveData<List<Integer>> mNoMax;
-
+    private MutableLiveData<Response<Void>> mDeleteGroup;
 
     public GratoViewModel() {
         mUserRepository = UserRepository.getInstance();
@@ -123,6 +123,7 @@ public class GratoViewModel extends ViewModel {
         mJoinGroup = new MutableLiveData<>();
         mOutGroup = new MutableLiveData<>();
         mNoMax = new MutableLiveData<>();
+        mDeleteGroup = new MutableLiveData<>();
     }
 
     public void login(String id, String password) {
@@ -397,6 +398,40 @@ public class GratoViewModel extends ViewModel {
     public LiveData<Response<Void>> getResponseOutGroup() {
         return mOutGroup;
     }
+
+    // delete group
+    public void deleteGroup(String token, String sub_id, Integer semester_id,
+                         String class_id, String group_name) {
+        mGroupRepository.deleteGroup(token, sub_id, semester_id, class_id, group_name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MaybeObserver<Response<Void>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Response<Void> voidResponse) {
+                        mDeleteGroup.setValue(voidResponse);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d("Viewmodel", "Error : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public LiveData<Response<Void>> getResponseDeleteGroup() {
+        return mDeleteGroup;
+    }
+
 
     // find no max
     public void fetchgetNoMax(String token, String sub_id, Integer semester_id, String class_id, String group_name) {

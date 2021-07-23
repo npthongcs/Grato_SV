@@ -37,8 +37,6 @@ import retrofit2.Response;
 
 public class ListGroupInClass extends Fragment implements ListGroupInClassAdapter.GroupItemListener {
 
-    Integer test = 10;
-
     RecyclerView listGroupRecycleView;
     View view;
     Integer noMem, maxMem;
@@ -85,6 +83,21 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
             maxMem = integers.get(1);
             insertData(noMem, maxMem, group_name, position);
         });
+
+        mGratoViewModel.getResponseDeleteGroup().observe(getViewLifecycleOwner(), voidResponse -> {
+            if (voidResponse.isSuccessful()){
+                CharSequence text = "Delete group successful";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getContext(), text, duration);
+                toast.show();
+                mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+            } else {
+                CharSequence text = "Delete group unsuccessful";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getContext(), text, duration);
+                toast.show();
+            }
+        });
     }
 
     private void getData() {
@@ -108,6 +121,7 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
                 listGroupClassAdapter.notifyItemChanged(positionJoin);
                 isOut = false;
             }
+            listGroupClassAdapter.notifyDataSetChanged();
         });
 
         mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
@@ -151,6 +165,22 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
 
     @Override
     public void clickDeleteGroup(String group_name, Integer noNow) {
+        if (noNow==0){
+            mGratoViewModel.deleteGroup(loginResponse.getToken(),"CO3005",202,"L01",group_name);
+            mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+        } else if (noNow>1){
+            CharSequence text = "You can't this group because numbers of member > 1";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getContext(), text, duration);
+            toast.show();
+        } else if (!group_name.equals(gname)){
+            CharSequence text = "You can't this group because you isn't member of group";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getContext(), text, duration);
+            toast.show();
+        } else {
+            mGratoViewModel.deleteGroup(loginResponse.getToken(),"CO3005",202,"L01",group_name);
+        }
 
     }
 
