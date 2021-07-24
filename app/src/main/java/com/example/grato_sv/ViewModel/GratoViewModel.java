@@ -24,6 +24,7 @@ import com.example.grato_sv.Model.Group;
 import com.example.grato_sv.Model.ListQuiz;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.Model.Member;
+import com.example.grato_sv.Model.truongSubject;
 import com.example.grato_sv.Repository.ClassInforRepository;
 import com.example.grato_sv.Repository.GroupRepository;
 import com.example.grato_sv.Repository.ListQuizRepository;
@@ -31,6 +32,8 @@ import com.example.grato_sv.Repository.ListMarkRepository;
 import com.example.grato_sv.Repository.ShowQuestionAndAnswerReponsitory;
 import com.example.grato_sv.Repository.TookAttendanceRepository;
 import com.example.grato_sv.Repository.UserRepository;
+
+import com.example.grato_sv.Repository.SubjectRepository;
 
 import java.util.Date;
 import java.util.List;
@@ -83,6 +86,8 @@ public class GratoViewModel extends ViewModel {
     private MutableLiveData<Response<Void>> mOutGroup;
     private MutableLiveData<List<Integer>> mNoMax;
 
+    private MutableLiveData<List<truongSubject>> mSubject;
+    private SubjectRepository mSubjectRepository;
 
     public GratoViewModel() {
         mUserRepository = UserRepository.getInstance();
@@ -123,6 +128,9 @@ public class GratoViewModel extends ViewModel {
         mJoinGroup = new MutableLiveData<>();
         mOutGroup = new MutableLiveData<>();
         mNoMax = new MutableLiveData<>();
+
+        mSubjectRepository = SubjectRepository.getInstance();
+        mSubject = new MutableLiveData<>();
     }
 
     public void login(String id, String password) {
@@ -691,5 +699,36 @@ public class GratoViewModel extends ViewModel {
         return mShowQuestionAndAnswer;
     }
 
+    ////////////// TRUONG //////////////////
+    // list group
+    public void fetchListSubject(String token, String user_id, Integer semester_id) {
+        mSubjectRepository.getListSubject(token, user_id, semester_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MaybeObserver<List<truongSubject>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<truongSubject> subjects) {
+                        mSubject.setValue(subjects);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public LiveData<List<truongSubject>> getResponseListSubject() {
+        return mSubject;
+    }
 }

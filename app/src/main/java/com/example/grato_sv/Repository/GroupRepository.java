@@ -40,11 +40,13 @@ public class GroupRepository {
 
     public Maybe<Response<Void>> createGroup(String token, String sub_id, Integer semester_id,
                                              String class_id, String group_name, Integer max_student){
+        Log.d("abcdeef", "abcd");
         return mApiRequest.createGroup(token,sub_id,semester_id,class_id,group_name,max_student);
     }
 
     public Maybe<String> findGroup(String token, String user_id,String sub_id, Integer semester_id,
                                    String class_id){
+        Log.d("abcdef", "abc");
         return mApiRequest.findGroup(token,user_id,sub_id,semester_id,class_id);
     }
 
