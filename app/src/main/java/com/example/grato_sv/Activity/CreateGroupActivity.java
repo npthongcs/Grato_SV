@@ -80,29 +80,38 @@ public class CreateGroupActivity extends AppCompatActivity {
 
     private void getData() {
         newName = etNewName.getText().toString();
-        maxMember = Integer.parseInt(etMaxMem.getText().toString());
-        Log.d("new name",newName);
-        Log.d("new max member", maxMember.toString());
+        String s = etMaxMem.getText().toString();
+        if (newName.equals("") || s.equals("")){
+            Context context = getApplicationContext();
+            CharSequence text = "Group name or max number is empty";
+            int duration = Toast.LENGTH_SHORT;
 
-        mGratoViewModel.getResponseCreateGroup().observe(this, voidResponse -> {
-            Log.d("create group",voidResponse.message());
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        } else {
+            maxMember = Integer.parseInt(etMaxMem.getText().toString());
+            Log.d("new name", newName);
+            Log.d("new max member", maxMember.toString());
 
-            if (voidResponse.isSuccessful()){
-                Context context = getApplicationContext();
-                CharSequence text = "Create group successful";
-                int duration = Toast.LENGTH_SHORT;
+            mGratoViewModel.getResponseCreateGroup().observe(this, voidResponse -> {
+                Log.d("create group", voidResponse.message());
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-                joinGroup();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+                if (voidResponse.isSuccessful()) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Create group successful";
+                    int duration = Toast.LENGTH_SHORT;
 
-        mGratoViewModel.createGroup(loginResponse.getToken(),"CO3005",202,"L01",
-                newName,maxMember);
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                    joinGroup();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }
+            });
 
+            mGratoViewModel.createGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+                    newName, maxMember);
+        }
     }
 
     // ==============
