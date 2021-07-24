@@ -14,6 +14,7 @@ import com.example.grato_sv.Model.Member;
 import com.example.grato_sv.Model.Mark;
 import com.example.grato_sv.Model.QuestionAndAnswer;
 import com.example.grato_sv.Model.ShowQuestionAndAnswer;
+import com.example.grato_sv.Model.truongSubject;
 
 import java.util.Date;
 import java.util.List;
@@ -201,6 +202,14 @@ public interface ApiRequest {
             @Query("sub_id") String sub_id,
             @Query("semester_id") Integer semester_id,
             @Query("class_id") String class_id
+    );
+
+    //============================== TRUONG ===============================
+    @GET("student/subject/listsubject")
+    Maybe<List<truongSubject>> getListSubject(
+            @Header("authorization") String authorization,
+            @Query("user_id") String user_id,
+            @Query("semester_id") Integer semester_id
     );
 
 

@@ -18,6 +18,7 @@ import com.example.grato_sv.Model.truongSubject;
 import com.example.grato_sv.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class truongListSubjectAdapter extends RecyclerView.Adapter<truongListSubjectAdapter.SubjectViewHolder> {
 
@@ -48,6 +49,10 @@ public class truongListSubjectAdapter extends RecyclerView.Adapter<truongListSub
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra("subject_id", truongsubject.getSubjectId());
+                intent.putExtra("subject_name", truongsubject.getBtnSubject());
+                intent.putExtra("class_id", truongsubject.getTxtClassName());
+
                 context.startActivity(intent);
             }
         });
