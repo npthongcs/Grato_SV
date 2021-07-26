@@ -38,13 +38,12 @@ public class CreateGroupActivity extends AppCompatActivity {
     GratoViewModel mGratoViewModel;
     Toolbar toolbar;
     Integer noMem, maxMem;
+    String subID, classID, subName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
-
-        ListGroupInClass listGroupInClass = new ListGroupInClass();
 
         // get token
         SessionManagement sessionManagement = SessionManagement.getInstance(this);
@@ -55,6 +54,11 @@ public class CreateGroupActivity extends AppCompatActivity {
 
         addControls();
         mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
+
+        Intent intent = getIntent();
+        subID = intent.getStringExtra("subject_id");
+        classID = intent.getStringExtra("class_id");
+        subName = intent.getStringExtra("subject_name");
 
         toolbar.setNavigationOnClickListener(v -> finish());
 
@@ -75,7 +79,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 toast.show();
             } else getData();
         });
-        mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+        mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), subID, 202, classID);
     }
 
     private void getData() {
@@ -105,11 +109,14 @@ public class CreateGroupActivity extends AppCompatActivity {
                     toast.show();
                     joinGroup();
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("subject_id",subID);
+                    intent.putExtra("class_id",classID);
+                    intent.putExtra("subject_name",subName);
                     startActivity(intent);
                 }
             });
 
-            mGratoViewModel.createGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+            mGratoViewModel.createGroup(loginResponse.getToken(), subID, 202, classID,
                     newName, maxMember);
         }
     }
@@ -125,7 +132,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 insertData(noMem,maxMem);
             }
         });
-        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(),"CO3005",202,"L01",newName);
+        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(),subID,202,classID,newName);
     }
 
     private void insertData(Integer noMem,Integer maxMem) {
@@ -152,7 +159,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                 }
             });
 
-            mGratoViewModel.joinGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+            mGratoViewModel.joinGroup(loginResponse.getToken(), subID, 202, classID,
                     newName, loginResponse.getUser().getId());
         }
         else {

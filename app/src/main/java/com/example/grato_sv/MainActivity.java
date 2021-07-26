@@ -1,10 +1,13 @@
 package com.example.grato_sv;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.grato_sv.Adapter.MainViewPagerAdapter;
@@ -21,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     Toolbar toolbar;
+    static String subjectName="-1", subID="-1", classID="-1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +33,31 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         toolbar = findViewById(R.id.tbCreateGroup);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+        Intent intent = getIntent();
+        subjectName = intent.getStringExtra("subject_name");
+        subID = intent.getStringExtra("subject_id");
+        classID = intent.getStringExtra("class_id");
+
+        toolbar.setNavigationOnClickListener(v -> finish());
         init();
+    }
+
+    static public String getSubjectName(){
+        return subjectName;
+    }
+    static public String getSubjectID(){
+        return subID;
+    }
+    static public String getClassID(){
+        return classID;
     }
 
     private void init(){
 //        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        ActionBar actionbar = getSupportActionBar();
-//        actionbar.setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
 
         MainViewPagerAdapter adapter = new MainViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new InforSubject());

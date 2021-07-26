@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.grato_sv.Activity.CreateGroupActivity;
 import com.example.grato_sv.Adapter.ListGroupInClassAdapter;
+import com.example.grato_sv.MainActivity;
 import com.example.grato_sv.Model.Group;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.R;
@@ -67,6 +68,9 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
 
         fab.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), CreateGroupActivity.class);
+            intent.putExtra("subject_id",MainActivity.getSubjectID());
+            intent.putExtra("class_id",MainActivity.getClassID());
+            intent.putExtra("subject_name",MainActivity.getSubjectName());
             requireActivity().startActivity(intent);
         });
 
@@ -90,7 +94,8 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(getContext(), text, duration);
                 toast.show();
-                mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+                mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), MainActivity.getSubjectID(),
+                        202, MainActivity.getClassID());
             } else {
                 CharSequence text = "Delete group unsuccessful";
                 int duration = Toast.LENGTH_SHORT;
@@ -103,8 +108,9 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
     private void getData() {
         mGratoViewModel.getResponseFindGroup().observe(getViewLifecycleOwner(), s -> {
             gname = s;
-            Log.d("name finded", gname);
-            mGratoViewModel.fetchListGroup(loginResponse.getToken(), "CO3005", 202, "L01");
+            Log.d("name find", gname);
+            mGratoViewModel.fetchListGroup(loginResponse.getToken(), MainActivity.getSubjectID(), 202,
+                    MainActivity.getClassID());
         });
 
         mGratoViewModel.getResponseListGroup().observe(getViewLifecycleOwner(), groups -> {
@@ -124,7 +130,8 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
             listGroupClassAdapter.notifyDataSetChanged();
         });
 
-        mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+        mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), MainActivity.getSubjectID(),
+                202, MainActivity.getClassID());
 
     }
 
@@ -148,11 +155,12 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
 
                     isOut = true;
                     positionJoin = position;
-                    mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+                    mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), MainActivity.getSubjectID(), 202, "L01");
                 }
             }
         });
-        mGratoViewModel.outGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+        mGratoViewModel.outGroup(loginResponse.getToken(), MainActivity.getSubjectID(),
+                202, MainActivity.getClassID(),
                 group_name, loginResponse.getUser().getId());
     }
 
@@ -160,14 +168,15 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
     public void clickJoinGroup(String group_name, Integer position) {
         this.group_name = group_name;
         this.position = position;
-        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(), "CO3005", 202, "L01", group_name);
+        mGratoViewModel.fetchgetNoMax(loginResponse.getToken(), MainActivity.getSubjectID(), 202,
+                MainActivity.getClassID(), group_name);
     }
 
     @Override
     public void clickDeleteGroup(String group_name, Integer noNow) {
         if (noNow==0){
-            mGratoViewModel.deleteGroup(loginResponse.getToken(),"CO3005",202,"L01",group_name);
-            mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+            mGratoViewModel.deleteGroup(loginResponse.getToken(),MainActivity.getSubjectID(),202,MainActivity.getClassID(),group_name);
+            mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), MainActivity.getSubjectID(), 202, MainActivity.getClassID());
         } else if (noNow>1){
             CharSequence text = "You can't this group because numbers of member > 1";
             int duration = Toast.LENGTH_SHORT;
@@ -179,7 +188,7 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
             Toast toast = Toast.makeText(getContext(), text, duration);
             toast.show();
         } else {
-            mGratoViewModel.deleteGroup(loginResponse.getToken(),"CO3005",202,"L01",group_name);
+            mGratoViewModel.deleteGroup(loginResponse.getToken(),MainActivity.getSubjectID(),202,MainActivity.getClassID(),group_name);
         }
 
     }
@@ -189,13 +198,14 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
             mGratoViewModel.getResponseJoinGroup().observe(getViewLifecycleOwner(), voidResponse -> {
                 Log.d("join group", voidResponse.message());
                 if (voidResponse.isSuccessful()) {
-                    CharSequence text = "Join group successful";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(getContext(), text, duration);
-                    toast.show();
+//                    CharSequence text = "Join group successful";
+//                    int duration = Toast.LENGTH_SHORT;
+//                    Toast toast = Toast.makeText(getContext(), text, duration);
+//                    toast.show();
                     isJoin = true;
                     positionJoin = position;
-                    mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), "CO3005", 202, "L01");
+                    mGratoViewModel.findGroup(loginResponse.getToken(), loginResponse.getUser().getId(), MainActivity.getSubjectID(),
+                            202, MainActivity.getClassID());
                 } else {
                     CharSequence text = "Join group unsuccessful";
                     int duration = Toast.LENGTH_SHORT;
@@ -204,7 +214,7 @@ public class ListGroupInClass extends Fragment implements ListGroupInClassAdapte
                 }
             });
 
-            mGratoViewModel.joinGroup(loginResponse.getToken(), "CO3005", 202, "L01",
+            mGratoViewModel.joinGroup(loginResponse.getToken(), MainActivity.getSubjectID(), 202, MainActivity.getClassID(),
                     group_name, loginResponse.getUser().getId());
         } else {
             CharSequence text = "The group has enough members. Please join another group";

@@ -80,12 +80,9 @@ public class ListGroupInClassAdapter extends RecyclerView.Adapter<ListGroupInCla
         holder.btnMember.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String mode="";
                 Intent intent = new Intent(context, ListMemberInGroup.class);
-                mode = holder.btnMode.getText().toString();
                 Log.d("name group adapter",mgroup.getGname());
                 intent.putExtra("nameGroup",mgroup.getGname());
-                intent.putExtra("modeButton",mode);
                 context.startActivity(intent);
             }
         });

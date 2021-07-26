@@ -76,7 +76,7 @@ public class TruongListSubjectActivity extends AppCompatActivity {
         ArrayList<truongSubject> lstSubject = new ArrayList<>();
 
         mGratoViewModel.getResponseListSubject().observe(this, subjects -> {
-            Log.d("list subjectt", subjects.toString());
+            Log.d("list subject", subjects.toString());
             for(truongSubject subject : subjects){
                 lstSubject.add(subject);
             }

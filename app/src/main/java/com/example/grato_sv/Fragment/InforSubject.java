@@ -10,10 +10,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.grato_sv.MainActivity;
 import com.example.grato_sv.Model.ClassInfor;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.R;
@@ -22,6 +26,7 @@ import com.example.grato_sv.ViewModel.GratoViewModel;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InforSubject extends Fragment {
 
@@ -33,6 +38,7 @@ public class InforSubject extends Fragment {
     TextView room;
     TextView time;
     TextView nameTeacher;
+    String subjectName, subjectID, classId;
 
     @Nullable
     @Override
@@ -45,6 +51,13 @@ public class InforSubject extends Fragment {
         String loginResponseJson = sessionManagement.getSession();
         Gson gson = new Gson();
         loginResponse = gson.fromJson(loginResponseJson, LoginResponse.class);
+
+        subjectName = MainActivity.getSubjectName();
+        subjectID = MainActivity.getSubjectID();
+        classId = MainActivity.getClassID();
+
+        ActionBar toolbar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        toolbar.setTitle(subjectName);
 
         addControls();
         getData();
@@ -68,7 +81,7 @@ public class InforSubject extends Fragment {
             }
         });
 
-        mGratoViewModel.fetchClassInfor(loginResponse.getToken(),"CO3005",202,"L01");
+        mGratoViewModel.fetchClassInfor(loginResponse.getToken(),subjectID,202,classId);
     }
 
     private void addControls() {

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.grato_sv.Adapter.MemberInGroupAdapter;
 import com.example.grato_sv.Fragment.ListGroupInClass;
+import com.example.grato_sv.MainActivity;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.Model.Member;
 
@@ -39,8 +40,6 @@ public class ListMemberInGroup extends AppCompatActivity {
     Toolbar toolbar;
     String gname;
     String mode;
-    Button btnMode;
-    Integer noMem, maxMem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +49,8 @@ public class ListMemberInGroup extends AppCompatActivity {
         // get intent
         Intent intent = getIntent();
         gname = intent.getStringExtra("nameGroup");
-        mode = intent.getStringExtra("modeButton");
         Log.d("name group intent",gname);
-        Log.d("mode intent",mode);
 
-        // set mode button
-//        if (mode.equals("JOIN")){
-//            btnMode.setText("JOIN GROUP");
-//        }
-//        else {
-//            btnMode.setText("OUT GROUP");
-//        }
 
         // get token
         SessionManagement sessionManagement = SessionManagement.getInstance(this);
@@ -168,7 +158,8 @@ public class ListMemberInGroup extends AppCompatActivity {
             memberInGroup.setAdapter(memberInGroupAdapter);
         });
 
-        mGratoViewModel.fetchMemberInGroup(loginResponse.getToken(),"CO3005",202,"L01",gname);
+        mGratoViewModel.fetchMemberInGroup(loginResponse.getToken(), MainActivity.getSubjectID(),
+                202,MainActivity.getClassID(),gname);
     }
 
     private void addControls(){
