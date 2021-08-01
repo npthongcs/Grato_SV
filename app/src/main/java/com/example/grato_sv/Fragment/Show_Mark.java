@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grato_sv.Adapter.MarkAdapter;
 import com.example.grato_sv.Adapter.QuizItemAdapter;
+import com.example.grato_sv.MainActivity;
 import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.Model.Mark;
 import com.example.grato_sv.Model.QuestionAndAnswer;
@@ -27,6 +28,7 @@ import com.example.grato_sv.SessionManagement;
 import com.example.grato_sv.ViewModel.GratoViewModel;
 import com.google.gson.Gson;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,10 @@ public class Show_Mark extends Fragment {
     View view;
     RecyclerView rvList;
     LoginResponse loginResponseSession;
+    String subjectName,subjectID,classId;
+    TextView subject;
+    TextView class_id;
+//    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     //    TextView question_id;
 //    TextView question_content;
     GratoViewModel mGratoViewModel;
@@ -42,8 +48,16 @@ public class Show_Mark extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.tung_xem_diem, container, false);
         rvList = view.findViewById(R.id.recycle_3);
+
         SessionManagement sessionManagement = SessionManagement.getInstance(getContext());
         String loginResponseJson = sessionManagement.getSession();
+        subjectName = MainActivity.getSubjectName();
+        subjectID = MainActivity.getSubjectID();
+        classId = MainActivity.getClassID();
+        subject = (TextView) view.findViewById(R.id.subject_text);
+        class_id  = (TextView)view.findViewById(R.id.class_id);
+        subject.setText("Object: " + subjectName);
+        class_id.setText("Class: "+ classId);
         Gson gson = new Gson();
         loginResponseSession = gson.fromJson(loginResponseJson, LoginResponse.class);
         getData();
@@ -56,6 +70,7 @@ public class Show_Mark extends Fragment {
 //        listMark.add(new Mark("Nguoi Phi Thuong","Deadline: 13 March, 2021","Complete in 12 March, 2021","9.00"));
 //        MarkAdapter markAdapter = new MarkAdapter(listMark);
 //        rvList.setAdapter(markAdapter);
+        int count = 0;
         mGratoViewModel = new ViewModelProvider(this).get(GratoViewModel.class);
 
         mGratoViewModel.getResponseMark().observe(getViewLifecycleOwner(), new Observer<List<Mark>>() {
@@ -72,9 +87,9 @@ public class Show_Mark extends Fragment {
 
         mGratoViewModel.fetchMark(
                 loginResponseSession.getToken(),
-                "CO3005",
+                subjectID,
                 202,
-                "L01"
+                classId
         );
     }
 }

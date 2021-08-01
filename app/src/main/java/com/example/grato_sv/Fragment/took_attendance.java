@@ -9,6 +9,7 @@ import android.icu.text.SymbolTable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -30,6 +32,7 @@ import com.example.grato_sv.Activity.DoQuizActivity;
 import com.example.grato_sv.Activity.ShowListQuizActivity;
 import com.example.grato_sv.Activity.tungtookattendance;
 import com.example.grato_sv.Adapter.MarkAdapter;
+import com.example.grato_sv.MainActivity;
 import com.example.grato_sv.Model.AbsentCount;
 import com.example.grato_sv.Model.Attend;
 import com.example.grato_sv.Model.DateCount;
@@ -46,6 +49,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +71,7 @@ public class took_attendance extends Fragment {
     TextView num_of_attend;
     TextView absent;
     Button button1;
+    String subjectName,subjectID,classId;
     FusedLocationProviderClient fusedLocationProviderClient;
 
     @Nullable
@@ -73,6 +79,9 @@ public class took_attendance extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_tungtookattendance, container, false);
         SessionManagement sessionManagement = SessionManagement.getInstance(getContext());
+        subjectName = MainActivity.getSubjectName();
+        subjectID = MainActivity.getSubjectID();
+        classId = MainActivity.getClassID();
         String loginResponseJson = sessionManagement.getSession();
         Gson gson = new Gson();
         loginResponseSession = gson.fromJson(loginResponseJson, LoginResponse.class);
@@ -107,9 +116,9 @@ public class took_attendance extends Fragment {
 
         mGratoViewModel.fetchCount(
                 loginResponseSession.getToken(),
-                "CO3005",
+                subjectID,
                 202,
-                "L01"
+                classId
         );
         mGratoViewmodelabsent.getResponseCountAbsent().observe(getViewLifecycleOwner(), new Observer<List<AbsentCount>>() {
             @Override
@@ -126,9 +135,9 @@ public class took_attendance extends Fragment {
 
         mGratoViewmodelabsent.fetchAbsent(
                 loginResponseSession.getToken(),
-                "CO3005",
+                subjectID,
                 202,
-                "L01"
+                classId
         );
 
 //        num_of_attend.setText("2");
@@ -138,17 +147,19 @@ public class took_attendance extends Fragment {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                System.out.println("1dlkfjalkdfjkdfjdkfjkdfj");
                 mGratoViewModelclick.getResponseAttend().observe(getViewLifecycleOwner(), new Observer<List<Attend>>() {
                     @Override
                     public void onChanged(List<Attend> attends) {
                         //Log.d("BBB", listQuizs.toString());
 //                question_id.setText(listAnswer.get(0).getQuestion_id().toString());
 //                question_content.setText(listAnswer.get(0).getQuestion_content());
-
+                        System.out.println(attends.get(0).getLasttook());
+                        System.out.println(attends.get(0).getStart_time());
                         if (attends.get(0).getLasttook().compareTo(attends.get(0).getStart_time()) < 0) {
                             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
                             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//                                getLocation();
+                                getLocation(attends.get(0).getLati(),attends.get(0).getLongti());
                             } else {
                                 ActivityCompat.requestPermissions((Activity) getContext(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
                             }
@@ -159,16 +170,17 @@ public class took_attendance extends Fragment {
 
                 mGratoViewModelclick.fetchAttend(
                         loginResponseSession.getToken(),
-                        "CO3005",
+                        subjectID,
                         202,
-                        "L01"
+                        classId
                 );
             }
         });
     }
 
-    public void getLocation() {
+    public void getLocation(Double lati,Double longti) {
         fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onComplete(@NonNull Task<Location> task) {
                 Location location = task.getResult();
@@ -177,8 +189,8 @@ public class took_attendance extends Fragment {
                     try {
                         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        double a = 10.881346;
-                        double b = 106.808827;
+                        double a = lati;
+                        double b = longti;
                         double c = addresses.get(0).getLatitude();
                         double d = addresses.get(0).getLongitude();
                         double earthRadius = 6371000; //meters
@@ -189,11 +201,37 @@ public class took_attendance extends Fragment {
                                         Math.sin(dLng / 2) * Math.sin(dLng / 2));
                         double result = 2 * Math.atan2(Math.sqrt(cal), Math.sqrt(1 - cal));
                         float dist = (float) (earthRadius * c);
-                        if (dist < 10) {
-                            Date date = new Date();
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("YYYY-MM-DD hh:mm:ss");
-                            System.out.println(timeFormat.format(date));
-
+//                        if (dist < 10) {
+////                            Date date = new Date();
+////                            System.out.println(date);
+//                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+//                            LocalDateTime now = LocalDateTime.now();
+//                            String day = dtf.format(now);
+//                            System.out.println(day);
+//                            mGratoViewModeladd.getResponseAddAttend().observe(getViewLifecycleOwner(), new Observer<Response<Void>>() {
+//                                @Override
+//                                public void onChanged(Response<Void> voidResponse) {
+//                                    if (voidResponse.code() == 200) {
+//                                        Toast.makeText(getActivity(), "Add exam successful!", Toast.LENGTH_SHORT).show();
+//                                    } else {
+//                                        Toast.makeText(getActivity(), "Add exam fail! Please try again!", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
+//
+//                            mGratoViewModeladd.fetchAddAttend(
+//                                    loginResponseSession.getToken(),
+//                                    "CO3005",
+//                                    202,
+//                                    "L01",
+//                                    day
+//                            );
+//                        }
+                        if (dist < 10){
+                            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+                            LocalDateTime now = LocalDateTime.now();
+                            String day = dtf.format(now);
+                            System.out.println(day);
                             mGratoViewModeladd.getResponseAddAttend().observe(getViewLifecycleOwner(), new Observer<Response<Void>>() {
                                 @Override
                                 public void onChanged(Response<Void> voidResponse) {
@@ -207,12 +245,34 @@ public class took_attendance extends Fragment {
 
                             mGratoViewModeladd.fetchAddAttend(
                                     loginResponseSession.getToken(),
-                                    "CO3005",
+                                    subjectID,
                                     202,
-                                    "L01",
-                                    date
+                                    classId,
+                                    day
                             );
                         }
+//                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+//                        LocalDateTime now = LocalDateTime.now();
+//                        String day = dtf.format(now);
+//                        System.out.println(day);
+//                        mGratoViewModeladd.getResponseAddAttend().observe(getViewLifecycleOwner(), new Observer<Response<Void>>() {
+//                            @Override
+//                            public void onChanged(Response<Void> voidResponse) {
+//                                if (voidResponse.code() == 200) {
+//                                    Toast.makeText(getActivity(), "Add exam successful!", Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    Toast.makeText(getActivity(), "Add exam fail! Please try again!", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//
+//                        mGratoViewModeladd.fetchAddAttend(
+//                                loginResponseSession.getToken(),
+//                                subjectID,
+//                                202,
+//                                classId,
+//                                day
+//                        );
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

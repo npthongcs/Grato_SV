@@ -18,25 +18,26 @@ import retrofit2.Response;
 
 import io.reactivex.rxjava3.core.Maybe;
 
-public class AddAttendanceRepository {
-    private static AddAttendanceRepository mInstance = null;
+public class SubmitQuizRepository {
+    private static SubmitQuizRepository mInstance = null;
     private ApiRequest mApiRequest = null;
 
     // khởi tạo ApiRequest
-    private AddAttendanceRepository(){
+    private SubmitQuizRepository(){
         mApiRequest = RetrofitInit.getInstance();
     }
 
     // khởi tạo mInstance
-    public static AddAttendanceRepository getInstance(){
+    public static SubmitQuizRepository getInstance(){
         if(mInstance == null){
-            mInstance = new AddAttendanceRepository();
+            mInstance = new SubmitQuizRepository();
         }
         return mInstance;
     }
 
-    public Maybe<Response<Void>> getAddAttend(String token, String sub_id, Integer semester_id, String class_id, String date){
+    public Maybe<Response<Void>> getSubmitQuiz(String token, String sub_id, Integer semester_id, String quiz_name,String answer,Double time,Double score){
         //Log.d("quizrepo", sub_id + " " + semester_id);
-        return mApiRequest.addattend(token, sub_id, semester_id,class_id,date);
+        return mApiRequest.addQuiz(token, sub_id, semester_id,quiz_name,answer,time,score);
     }
 }
+

@@ -21,13 +21,15 @@ import com.example.grato_sv.Model.ListQuiz;
 import com.example.grato_sv.R;
 import com.google.gson.Gson;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class ShowListQuizAdapter extends RecyclerView.Adapter<ShowListQuizAdapter.QuizHolder> {
     Context context;
     public ArrayList<ListQuiz> listQuiz;
     LoginResponse loginResponseSession;
-
+    ShowListQuizAdapter.ShowListQuizItemListener mShowListQuizItemListener;
     //QuizItemClickListener mQuizItemClickListener;
 
     public ShowListQuizAdapter(ArrayList<ListQuiz> listQuiz){
@@ -55,7 +57,10 @@ public class ShowListQuizAdapter extends RecyclerView.Adapter<ShowListQuizAdapte
 
         ListQuiz quiz = listQuiz.get(position);
         holder.quizname.setText(quiz.getQuiz_name());
-        holder.deadline.setText(quiz.getDeadline().toString());
+        SimpleDateFormat newFormatter = new SimpleDateFormat("E, dd MMM yyyy, hh:mm a");
+        String formattedDateString = newFormatter.format(quiz.getDeadline());
+        holder.deadline.setText("Deadline: " + formattedDateString);
+//        holder.deadline.setText("Deadline: "+ strDate);
         holder.score.setText(quiz.getScore() == null ? "Score: Not completed": "Score: " + quiz.getScore().toString());
         holder.button.setText( quiz.getScore() == null ? "Start": "View");
         holder.num_question.setText("No_question: "+quiz.getNo_question().toString());
@@ -66,10 +71,15 @@ public class ShowListQuizAdapter extends RecyclerView.Adapter<ShowListQuizAdapte
             public void onClick(View view) {
                 if (holder.button.getText() == "Start"){
                     Intent intent = new Intent(context, DoQuizActivity.class);
+                    intent.putExtra("quiz_name",quiz.getQuiz_name());
+                    intent.putExtra("max_time",quiz.getMax_time().toString());
                     context.startActivity(intent);
+                    mShowListQuizItemListener.clickEnd();
                 }
                 else{
+//                    mShowQuizItemListener.clickEnd();
                     Intent intent = new Intent(context, ViewQuizActivity.class);
+                    intent.putExtra("quiz_name",quiz.getQuiz_name());
                     context.startActivity(intent);
                 }
 
@@ -80,6 +90,11 @@ public class ShowListQuizAdapter extends RecyclerView.Adapter<ShowListQuizAdapte
     @Override
     public int getItemCount() {
         return listQuiz.size();
+    }
+
+    public interface ShowListQuizItemListener{
+        void clickEnd();
+//        void clickSubmit(Double score, String student_answer);
     }
 
     public class QuizHolder extends RecyclerView.ViewHolder {
@@ -99,5 +114,8 @@ public class ShowListQuizAdapter extends RecyclerView.Adapter<ShowListQuizAdapte
             max_time = (TextView) itemView.findViewById(R.id.time_do_quiz);
             score = (TextView) itemView.findViewById(R.id.score);
         }
+    }
+    public void setmShowListQuizItemListener (ShowListQuizItemListener showListQuizItemListener){
+        mShowListQuizItemListener = showListQuizItemListener;
     }
 }

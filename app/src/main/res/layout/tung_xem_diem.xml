@@ -31,18 +31,19 @@
             android:id="@+id/subject"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
+
         <TextView
+            android:id="@+id/subject_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/roboto_bold"
             android:text="Subject: Principle of Programmi..."
             android:textColor="#1687A7"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/subject"
-            app:layout_constraintTop_toBottomOf = "@id/tbCreateGroup"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
         <View
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -52,40 +53,20 @@
             android:id="@+id/tung_present"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
+
         <TextView
+            android:id="@+id/class_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/roboto_bold"
             android:text="Class: L01"
             android:textColor="#1687A7"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/tung_present"
-            app:layout_constraintTop_toBottomOf = "@id/tbCreateGroup"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="40dp"
-            />
-
-        <View
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="65dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/tung_test"
-            android:id="@+id/tung_test"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tbCreateGroup" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Avg grade: 9.00"
-            android:textColor="#1687A7"
-            android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@id/tung_present"
-            app:layout_constraintTop_toBottomOf = "@id/tbCreateGroup"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="65dp"
-            />
+
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView

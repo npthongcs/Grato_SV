@@ -8,22 +8,35 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grato_sv.Activity.DoQuizActivity;
+import com.example.grato_sv.Activity.ShowListQuizActivity;
 import com.example.grato_sv.Model.Answer;
 import com.example.grato_sv.Model.ListQuiz;
+import com.example.grato_sv.Model.LoginResponse;
 import com.example.grato_sv.Model.QuestionAndAnswer;
 import com.example.grato_sv.R;
+import com.example.grato_sv.SessionManagement;
+import com.example.grato_sv.ViewModel.GratoViewModel;
+import com.google.android.gms.common.api.Response;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.AnswerHolder> {
-    static int score;
-    static String student_answer = "";
+    public static int score;
+    public static String student_answer = "";
+    GratoViewModel mGratoViewModel;
     Context context;
+    LoginResponse loginResponseSession;
+    QuizItemListener mQuizItemListener;
     public ArrayList<QuestionAndAnswer> listAnswer;
     public QuizItemAdapter( ArrayList<QuestionAndAnswer> listAnswer){
         this.listAnswer = listAnswer;
@@ -34,9 +47,13 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.Answer
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.tung_quiz_item, parent, false); //đổi chỗ này lại khoan
+        SessionManagement sessionManagement = SessionManagement.getInstance(this.context);
+        String loginResponseJson = sessionManagement.getSession();
+        Gson gson = new Gson();
+        loginResponseSession = gson.fromJson(loginResponseJson, LoginResponse.class);
         return new AnswerHolder(view);
     }
-//ok, mà sao nhiều fule adapter vậy, quizitemadapter rồi còn quizadapter
+    //ok, mà sao nhiều fule adapter vậy, quizitemadapter rồi còn quizadapter
     // do t làm nhiều mục khác nhau nhiều recycle.  à để tên sao cho dễ hiểu chớ nhiều file quiz quá đọc khó, tìm khó
     //ok thanks
     @Override
@@ -54,8 +71,19 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.Answer
                 student_answer += questionAndAnswer.getAnswer_id();
                 if (questionAndAnswer.getQuestion_id() < questionAndAnswer.getNo_question()){
                     Intent intent = new Intent(context, DoQuizActivity.class);
+                    intent.putExtra("quiz_name",DoQuizActivity.quiz_name);
+                    intent.putExtra("max_time",DoQuizActivity.max_time);
                     context.startActivity(intent);
+                    mQuizItemListener.clickEnd();
+
                 }
+                else{
+                    double result = (double)score/questionAndAnswer.getNo_question();
+                    mQuizItemListener.clickSubmit(result,student_answer);
+//                    Intent intent = new Intent(context, ShowListQuizActivity.class);
+//                    context.startActivity(intent);
+                }
+                System.out.println();
 
             }
         });
@@ -66,11 +94,15 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.Answer
         return listAnswer.size();
     }
 
+    public interface QuizItemListener{
+        void clickEnd();
+        void clickSubmit(Double score, String student_answer);
+    }
 
     public class AnswerHolder extends RecyclerView.ViewHolder {
 
         public TextView answer;
-//        public TextView question_content;
+        //        public TextView question_content;
 //        public TextView question_id;
         public AnswerHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,5 +110,8 @@ public class QuizItemAdapter extends RecyclerView.Adapter<QuizItemAdapter.Answer
 //            question_content = (TextView) itemView.findViewById(R.id.question_content);
 //            question_id = (TextView)itemView.findViewById(R.id.question);
         }
+    }
+    public void setmQuizItemListener (QuizItemListener quizItemListener){
+        mQuizItemListener = quizItemListener;
     }
 }

@@ -6,11 +6,17 @@ public class Attend {
     java.util.Date start_time;
     java.util.Date end_time;
     java.util.Date lasttook;
+    Double lati;
+    Double longti;
 
-    public Attend(Date start_time, Date end_time, Date lasttook) {
+
+
+    public Attend(Date start_time, Date end_time, Date lasttook,Double lati,Double longti) {
         this.start_time = start_time;
         this.end_time = end_time;
         this.lasttook = lasttook;
+        this.longti = longti;
+        this.lati = lati;
     }
 
     public Date getStart_time() {
@@ -36,4 +42,9 @@ public class Attend {
     public void setLasttook(Date lasttook) {
         this.lasttook = lasttook;
     }
+
+    public Double getLati(){return lati;}
+    public void setLati(Double lati){this.lati = lati;}
+    public Double getLongti(){return longti;}
+    public void setLongti(Double longti){this.longti = longti;}
 }

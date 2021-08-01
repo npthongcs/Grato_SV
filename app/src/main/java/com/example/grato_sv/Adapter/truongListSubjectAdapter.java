@@ -52,7 +52,6 @@ public class truongListSubjectAdapter extends RecyclerView.Adapter<truongListSub
                 intent.putExtra("subject_id", truongsubject.getSubjectId());
                 intent.putExtra("subject_name", truongsubject.getBtnSubject());
                 intent.putExtra("class_id", truongsubject.getTxtClassName());
-
                 context.startActivity(intent);
             }
         });

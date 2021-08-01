@@ -30,6 +30,7 @@ import com.example.grato_sv.Repository.GroupRepository;
 import com.example.grato_sv.Repository.ListQuizRepository;
 import com.example.grato_sv.Repository.ListMarkRepository;
 import com.example.grato_sv.Repository.ShowQuestionAndAnswerReponsitory;
+import com.example.grato_sv.Repository.SubmitQuizRepository;
 import com.example.grato_sv.Repository.TookAttendanceRepository;
 import com.example.grato_sv.Repository.UserRepository;
 
@@ -89,6 +90,9 @@ public class GratoViewModel extends ViewModel {
     private SubjectRepository mSubjectRepository;
     private MutableLiveData<Response<Void>> mDeleteGroup;
 
+    private SubmitQuizRepository mSubmitQuizRepository;
+    private MutableLiveData<Response<Void>> mSubmitQuiz;
+
     public GratoViewModel() {
         mUserRepository = UserRepository.getInstance();
         mLoginResponse = new MutableLiveData<>();
@@ -131,6 +135,9 @@ public class GratoViewModel extends ViewModel {
         mSubjectRepository = SubjectRepository.getInstance();
         mSubject = new MutableLiveData<>();
         mDeleteGroup = new MutableLiveData<>();
+
+        mSubmitQuizRepository = mSubmitQuizRepository.getInstance();
+        mSubmitQuiz = new MutableLiveData<>();
     }
 
     public void login(String id, String password) {
@@ -668,7 +675,7 @@ public class GratoViewModel extends ViewModel {
         return mAttend;
     }
 
-    public void fetchAddAttend(String token, String sub_id, Integer semester_id, String class_id, Date date) {
+    public void fetchAddAttend(String token, String sub_id, Integer semester_id, String class_id, String date) {
         mAddAttendRepository.getAddAttend(token, sub_id, semester_id, class_id, date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -764,5 +771,38 @@ public class GratoViewModel extends ViewModel {
 
     public LiveData<List<truongSubject>> getResponseListSubject() {
         return mSubject;
+    }
+
+    public void fetchSubmitQuiz(String token, String sub_id, Integer semester_id, String class_id, String answer,Double time,Double score) {
+        mSubmitQuizRepository.getSubmitQuiz(token, sub_id, semester_id, class_id, answer,time,score)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MaybeObserver<Response<Void>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+
+                    @Override
+                    public void onSuccess(@NonNull Response<Void> attends) {
+                        mAddAttend.setValue(attends);
+                    }
+
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        //Log.d("Viewmodel", "Error : " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    public LiveData<Response<Void>> getResponseSubmitQuiz() {
+        return mSubmitQuiz;
     }
 }

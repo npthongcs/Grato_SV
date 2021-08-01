@@ -50,6 +50,7 @@ public interface ApiRequest {
             @Query("semester_id") Integer semester_id,
             @Query("class_id") String class_id
     );
+    @FormUrlEncoded
     @POST("student/quiz/submitquiz")
     Maybe<Response<Void>> addQuiz(
             @Header("authorization") String authorization,
@@ -181,7 +182,7 @@ public interface ApiRequest {
             @Field("sub_id") String sub_id,
             @Field("semester_id") Integer semester_id,
             @Field("class_id") String class_id,
-            @Field("date") Date date
+            @Field("date") String date
             );
 
     @GET("student/quiz/showquiz")
